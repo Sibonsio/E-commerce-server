@@ -7,14 +7,14 @@ export const registerUser = async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
     try {
-        const { firstname, lastname, email, password, terms, subscribe } = req.body;
+        const { fullname, email, password, terms, subscribe } = req.body;
         const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = new User({ firstname, lastname, email, password: hashedPassword, terms, subscribe });
+        const user = new User({ fullname, email, password: hashedPassword, terms, subscribe });
         await user.save({ session });
         await session.commitTransaction();
         res.status(201).json({ success: true, data: { user }, message: "User created successfully" });
