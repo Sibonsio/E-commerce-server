@@ -16,5 +16,5 @@ app.use(errorMiddleware)
 app.use('/api', router)
 
 app.listen(process.env.PORT, () => {
-    console.log(`Th server is running on http://localhost:${process.env.PORT}`)
+    console.log(`The server is running on http://localhost:${process.env.PORT}`)
 })
